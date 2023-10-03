@@ -16,7 +16,7 @@ pipeline {
       }
     }
     stage('check the file') {
-      agent { label 'mantoSlave' }
+      agent { label 'Maynas-Dev' }
       steps {
         unstash 'myStash'
         sh 'tree'
