@@ -1,0 +1,26 @@
+pipeline {
+  agent none
+
+  stages {
+    stage('Hello') {
+      agent { label 'linux' }
+      steps {
+        sh '''
+          touch file.txt
+          mkdir -p target
+          touch target/file2.jar
+          touch target/file3.war
+          tree
+        '''
+        stash(name: 'myStash', excludes: '**/*.war')
+      }
+    }
+    stage('check the file') {
+      agent { label 'Maynas-Dev' }
+      steps {
+        unstash 'myStash'
+        sh 'tree'
+      }
+    }
+  }
+}
